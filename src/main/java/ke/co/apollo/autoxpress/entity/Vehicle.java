@@ -1,6 +1,7 @@
 package ke.co.apollo.autoxpress.entity;
 
 import java.time.Year;
+import java.util.List;
 
 /**
  * Created by anthony.kipkoech on 29/05/2017.
@@ -14,6 +15,7 @@ public class Vehicle {
     private BodyType bodyType;
     private VehicleModel vehicleModel;
     private Owner owner;
+    private List<Inspection> inspectionList;
 
     public Vehicle() {
     }
@@ -79,5 +81,37 @@ public class Vehicle {
        public Vehicle build(){
            return new Vehicle(this);
        }
+    }
+
+    public String getRegNo() {
+        return regNo;
+    }
+
+    public Year getYom() {
+        return yom;
+    }
+
+    public String getPolicyNo() {
+        return policyNo;
+    }
+
+    public String getLogBookPhoto() {
+        return logBookPhoto;
+    }
+
+    public BodyType getBodyType() {
+        return bodyType;
+    }
+
+    public VehicleModel getVehicleModel() {
+        return vehicleModel;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public List<Inspection> getInspectionList() {
+        return inspectionList;
     }
 }

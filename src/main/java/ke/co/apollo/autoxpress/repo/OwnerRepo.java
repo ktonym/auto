@@ -44,7 +44,7 @@ public class OwnerRepo extends JdbcDaoSupport {
 
     }
 
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public List<Owner> findByNameLike(String searchStr){
         return getJdbcTemplate().query("SELECT * FROM owner WHERE UPPER (name) LIKE ?",
                 (rs,i) -> new Owner.OwnerBuilder()
@@ -59,7 +59,7 @@ public class OwnerRepo extends JdbcDaoSupport {
                 ,"%"+searchStr.toUpperCase()+"%");
     }
 
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public Owner findById_PIN(String search){
 
         return getJdbcTemplate().queryForObject("SELECT * FROM owner WHERE id_pin = ?",
@@ -75,7 +75,7 @@ public class OwnerRepo extends JdbcDaoSupport {
 
     }
 
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     private Owner findByOwnerId(Integer id){
 
         return getJdbcTemplate()

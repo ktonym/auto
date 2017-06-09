@@ -79,4 +79,31 @@ public class Owner {
         }
     }
 
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public String getId_pin() {
+        return id_pin;
+    }
+
+    public String getIdPhoto() {
+        return idPhoto;
+    }
+
+    public String getDlPhoto() {
+        return dlPhoto;
+    }
 }

@@ -4,6 +4,7 @@ import ke.co.apollo.autoxpress.entity.VehicleMake;
 import ke.co.apollo.autoxpress.entity.VehicleModel;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by anthony.kipkoech on 29/05/2017.
  */
+@Repository
 public class VehicleModelRepo extends JdbcDaoSupport{
 
     public VehicleModel create(VehicleMake make, String model){

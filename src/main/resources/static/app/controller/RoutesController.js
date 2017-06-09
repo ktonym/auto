@@ -11,7 +11,7 @@ Ext.define('AutoXpress.controller.RoutesController', {
 
     },
 
-    handleSessionCheck: function (beAdmin, args) {
+    handleSessionCheck: function (beSuperAdmin,beAdmin, args) {
         args    = Ext.Array.slice(args);
         var me      = this,
             action  = args[args.length - 1],
@@ -41,11 +41,15 @@ Ext.define('AutoXpress.controller.RoutesController', {
     },
 
     checkSession: function () {
-        this.handleSessionCheck(false, arguments);
+        this.handleSessionCheck(false,false, arguments);
     },
 
     checkIsAdmin: function () {
-        this.handleSessionCheck(true, arguments);
+        this.handleSessionCheck(false,true, arguments);
+    },
+
+    checkIsSuperAdmin: function () {
+
     }
     
 });

@@ -18,18 +18,6 @@ public class VehicleModel {
         this.vehicleMake = builder.vehicleMake;
     }
 
-    public Integer getModelId() {
-        return modelId;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public VehicleMake getVehicleMake() {
-        return vehicleMake;
-    }
-
     public static class VehicleModelBuilder{
 
         private Integer modelId;
@@ -58,4 +46,17 @@ public class VehicleModel {
             return new VehicleModel(this);
         }
     }
+
+    public Integer getModelId() {
+        return modelId;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public VehicleMake getVehicleMake() {
+        return vehicleMake;
+    }
+
 }
