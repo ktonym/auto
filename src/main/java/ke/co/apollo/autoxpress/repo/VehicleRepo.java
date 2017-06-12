@@ -27,6 +27,13 @@ public class VehicleRepo extends JdbcDaoSupport {
 
         getJdbcTemplate().update(con -> {
             PreparedStatement ps = con.prepareStatement("INSERT INTO vehicle(regNo,yom,ownerId,modelId,bodyTypeId,logbookPhoto,policyNo) VALUES (?,?,?,?,?,?,?)");
+            ps.setString(1,regNo);
+            ps.setInt(2,yom.getValue());
+            ps.setInt(3,owner.getOwnerId());
+            ps.setInt(4,model.getModelId());
+            ps.setInt(5,bodyType.getBodyTypeId());
+            ps.setString(6,logbookPhoto);
+            ps.setString(7,policyNo);
             return ps;
         });
 
