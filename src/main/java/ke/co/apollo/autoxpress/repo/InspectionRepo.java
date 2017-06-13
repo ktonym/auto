@@ -1,12 +1,14 @@
 package ke.co.apollo.autoxpress.repo;
 
 import ke.co.apollo.autoxpress.entity.Inspection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
@@ -17,6 +19,11 @@ import java.util.List;
  */
 @Repository
 public class InspectionRepo extends JdbcDaoSupport{
+
+    @Autowired
+    public void setDs(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     @Transactional(readOnly = false,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public Inspection create(/*Integer inspectionId,*/ LocalDate inspectionDate, Long odometerReading,

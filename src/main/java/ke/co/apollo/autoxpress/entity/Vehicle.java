@@ -12,9 +12,10 @@ public class Vehicle {
     private Year yom;
     private String policyNo;
     private String logBookPhoto;
-    private BodyType bodyType;
-    private VehicleModel vehicleModel;
-    private Owner owner;
+    private Integer bodyTypeId;
+    private Integer vehicleModelId;
+    private Integer ownerId;
+    private byte[] logBookImage;
     private List<Inspection> inspectionList;
 
     public Vehicle() {
@@ -25,9 +26,9 @@ public class Vehicle {
         this.yom = builder.yom;
         this.policyNo = builder.policyNo;
         this.logBookPhoto = builder.logBookPhoto;
-        this.bodyType = builder.bodyType;
-        this.vehicleModel = builder.vehicleModel;
-        this.owner = builder.owner;
+        this.bodyTypeId = builder.bodyTypeId;
+        this.vehicleModelId = builder.vehicleModelId;
+        this.ownerId = builder.ownerId;
     }
 
     public static class VehicleBuilder{
@@ -36,9 +37,10 @@ public class Vehicle {
        private Year yom;
        private String policyNo;
        private String logBookPhoto;
-       private BodyType bodyType;
-       private VehicleModel vehicleModel;
-       private Owner owner;
+       private Integer bodyTypeId;
+       private Integer vehicleModelId;
+       private Integer ownerId;
+       private byte[] logBookImage;
 
        public VehicleBuilder() {
        }
@@ -63,21 +65,25 @@ public class Vehicle {
            return this;
        }
 
-       public VehicleBuilder bodyType(BodyType bodyType){
-           this.bodyType = bodyType;
+       public VehicleBuilder bodyTypeId(Integer bodyTypeId){
+           this.bodyTypeId = bodyTypeId;
            return this;
        }
 
-       public VehicleBuilder vehicleModel(VehicleModel vehicleModel){
-           this.vehicleModel = vehicleModel;
+       public VehicleBuilder vehicleModelId(Integer vehicleModelId){
+           this.vehicleModelId = vehicleModelId;
            return this;
        }
 
-        public VehicleBuilder owner(Owner owner) {
-            this.owner = owner;
+        public VehicleBuilder ownerId(Integer ownerId) {
+            this.ownerId = ownerId;
             return this;
         }
 
+        public VehicleBuilder logbookImage(byte[] logBookImage){
+           this.logBookImage = logBookImage;
+           return this;
+        }
        public Vehicle build(){
            return new Vehicle(this);
        }
@@ -99,16 +105,16 @@ public class Vehicle {
         return logBookPhoto;
     }
 
-    public BodyType getBodyType() {
-        return bodyType;
+    public Integer getBodyTypeId() {
+        return bodyTypeId;
     }
 
-    public VehicleModel getVehicleModel() {
-        return vehicleModel;
+    public Integer getVehicleModelId() {
+        return vehicleModelId;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public Integer getOwnerId() {
+        return ownerId;
     }
 
     public List<Inspection> getInspectionList() {

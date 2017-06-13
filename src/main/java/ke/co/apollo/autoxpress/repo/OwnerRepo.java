@@ -1,21 +1,27 @@
 package ke.co.apollo.autoxpress.repo;
 
 import ke.co.apollo.autoxpress.entity.Owner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by anthony.kipkoech on 30/05/2017.
  */
 @Repository
 public class OwnerRepo extends JdbcDaoSupport {
+
+    @Autowired
+    public void setDs(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     @Transactional(readOnly = false,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public Owner create(String name,String email,String mobile,
@@ -41,6 +47,18 @@ public class OwnerRepo extends JdbcDaoSupport {
                 .dlPhoto(dlPhoto).idPhoto(idPhoto)
                 .ownerId(keyHolder.getKey().intValue())
                 .build();
+
+    }
+
+    @Transactional(readOnly = false,propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Owner update(Integer ownerId, String name, String email,
+                        String mobile, String id_pin, String idPhoto, String dlPhoto) {
+
+        getJdbcTemplate().update("UPDATE owner SET name=?,email=?,mobile=?,id_pin=?,idPhoto=?,dlPhoto=? WHERE ownerId=?",
+                new Object[]{name,email,mobile,id_pin,idPhoto,dlPhoto,ownerId});
+        return new Owner.OwnerBuilder()
+                .ownerId(ownerId).name(name).email(email).mobile(mobile).id_pin(id_pin)
+                .idPhoto(idPhoto).dlPhoto(dlPhoto).build();
 
     }
 
@@ -92,4 +110,15 @@ public class OwnerRepo extends JdbcDaoSupport {
 
     }
 
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    public List<Owner> findAll() {
+
+       return getJdbcTemplate().query("SELECT * FROM owner",
+                (rs,i) -> new Owner.OwnerBuilder()
+                        .ownerId(rs.getInt("ownerId")).name(rs.getString("name"))
+                        .email(rs.getString("email")).mobile(rs.getString("mobile"))
+                        .id_pin(rs.getString("id_pin")).idPhoto(rs.getString("idPhoto"))
+                        .dlPhoto(rs.getString("dlPhoto"))
+                        .build());
+    }
 }

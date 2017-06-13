@@ -1,11 +1,14 @@
 package ke.co.apollo.autoxpress.repo;
 
-import ke.co.apollo.autoxpress.entity.VehicleMake;
 import ke.co.apollo.autoxpress.entity.VehicleModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -15,7 +18,13 @@ import java.util.List;
 @Repository
 public class VehicleModelRepo extends JdbcDaoSupport{
 
-    public VehicleModel create(VehicleMake make, String model){
+    @Autowired
+    public void setDs(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public VehicleModel create(Integer makeId, String model){
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         String idCol = "modelId";
@@ -23,32 +32,34 @@ public class VehicleModelRepo extends JdbcDaoSupport{
             PreparedStatement ps = con.prepareStatement("INSERT INTO vehiclemodel(model,makeId) VALUES(?,?)",
                     new String[]{idCol});
             ps.setString(1,model);
-            ps.setInt(2,make.getMakeId());
+            ps.setInt(2,makeId);
             return ps;
         },keyHolder);
 
         return new VehicleModel.VehicleModelBuilder()
-                .make(make)
+                .makeId(makeId)
                 .model(model)
                 .modelId(keyHolder.getKey().intValue()).build();
     }
 
-    public VehicleModel update(Integer modelId,VehicleMake make, String model){
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public VehicleModel update(Integer modelId,Integer vehicleMakeId, String model){
         getJdbcTemplate().update("UPDATE vehiclemodel SET model = ? ,makeId = ? WHERE modelId = ?",
-                new Object[]{model,make.getMakeId(),modelId});
+                new Object[]{model,vehicleMakeId,modelId});
         return new VehicleModel.VehicleModelBuilder()
-                .make(make)
+                .makeId(vehicleMakeId)
                 .model(model)
                 .modelId(modelId)
                 .build();
     }
 
-    public List<VehicleModel> findByMake(VehicleMake make){
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public List<VehicleModel> findByMake(Integer makeId){
         return getJdbcTemplate().query("SELECT * FROM vehiclemodel WHERE makeId = ?",
                 (rs,i) -> new VehicleModel.VehicleModelBuilder()
-                        .make(make)
+                        .makeId(makeId)
                         .modelId(rs.getInt("modelId"))
-                        .model(rs.getString("model")).build(), make.getMakeId());
+                        .model(rs.getString("model")).build(), makeId);
     }
 
 

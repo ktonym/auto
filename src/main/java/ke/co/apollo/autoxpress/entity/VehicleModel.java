@@ -7,7 +7,7 @@ public class VehicleModel {
 
     private Integer modelId;
     private String model;
-    private VehicleMake vehicleMake;
+    private Integer vehicleMakeId;
 
     public VehicleModel() {
     }
@@ -15,20 +15,20 @@ public class VehicleModel {
     public VehicleModel(VehicleModelBuilder builder) {
         this.modelId = builder.modelId;
         this.model = builder.model;
-        this.vehicleMake = builder.vehicleMake;
+        this.vehicleMakeId = builder.vehicleMakeId;
     }
 
     public static class VehicleModelBuilder{
 
         private Integer modelId;
         private String model;
-        private VehicleMake vehicleMake;
+        private Integer vehicleMakeId;
 
         public VehicleModelBuilder() {
         }
 
-        public VehicleModelBuilder make(VehicleMake make){
-            this.vehicleMake = make;
+        public VehicleModelBuilder makeId(Integer makeId){
+            this.vehicleMakeId = makeId;
             return this;
         }
 
@@ -55,8 +55,7 @@ public class VehicleModel {
         return model;
     }
 
-    public VehicleMake getVehicleMake() {
-        return vehicleMake;
+    public Integer getVehicleMakeId() {
+        return vehicleMakeId;
     }
-
 }

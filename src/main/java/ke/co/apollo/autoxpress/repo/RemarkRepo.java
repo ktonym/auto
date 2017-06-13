@@ -3,12 +3,14 @@ package ke.co.apollo.autoxpress.repo;
 import ke.co.apollo.autoxpress.entity.AntiTheftDevice;
 import ke.co.apollo.autoxpress.entity.Inspection;
 import ke.co.apollo.autoxpress.entity.Remark;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -17,6 +19,11 @@ import java.util.List;
  */
 @Repository
 public class RemarkRepo extends JdbcDaoSupport{
+
+    @Autowired
+    public void setDs(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Remark create(String generalCondition, AntiTheftDevice antiTheftDevice,

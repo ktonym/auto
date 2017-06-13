@@ -1,12 +1,14 @@
 package ke.co.apollo.autoxpress.repo;
 
 import ke.co.apollo.autoxpress.entity.BodyType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -15,6 +17,11 @@ import java.util.List;
  */
 @Repository
 public class BodyTypeRepo extends JdbcDaoSupport {
+
+    @Autowired
+    public void setDs(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     @Transactional(readOnly = true,propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     public BodyType findById(Integer id){
@@ -42,7 +49,16 @@ public class BodyTypeRepo extends JdbcDaoSupport {
                     (rs,i) -> new BodyType.BodyTypeBuilder()
                             .bodyTypeId(rs.getInt(1))
                             .body(rs.getString(2))
-                            .build(), new String[]{body});
+                            .build(), new Object[]{body});
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<BodyType> findAll(){
+        return getJdbcTemplate().query("SELECT * FROM bodytype",
+                (rs,i) -> new BodyType.BodyTypeBuilder()
+                        .bodyTypeId(rs.getInt(1))
+                        .body(rs.getString(2))
+                        .build());
     }
 
     @Transactional(readOnly = false,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)

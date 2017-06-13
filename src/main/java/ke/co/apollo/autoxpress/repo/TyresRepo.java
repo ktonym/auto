@@ -1,26 +1,31 @@
 package ke.co.apollo.autoxpress.repo;
 
-import com.sun.org.apache.regexp.internal.RE;
 import ke.co.apollo.autoxpress.entity.Inspection;
 import ke.co.apollo.autoxpress.entity.Tyres;
 import org.apache.tomcat.util.buf.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Created by anthony.kipkoech on 12/06/2017.
  */
 @Repository
 public class TyresRepo extends JdbcDaoSupport {
+
+    @Autowired
+    public void setDs(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Tyres create(Inspection inspection,ArrayList<String> frontLeft,

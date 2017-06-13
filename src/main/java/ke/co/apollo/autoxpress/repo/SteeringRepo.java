@@ -1,15 +1,16 @@
 package ke.co.apollo.autoxpress.repo;
 
-import ke.co.apollo.autoxpress.entity.Gearbox;
 import ke.co.apollo.autoxpress.entity.Inspection;
 import ke.co.apollo.autoxpress.entity.Steering;
 import org.apache.tomcat.util.buf.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,11 @@ import java.util.List;
  */
 @Repository
 public class SteeringRepo extends JdbcDaoSupport {
+
+    @Autowired
+    public void setDs(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Steering create(Inspection inspection, List<String> play){
